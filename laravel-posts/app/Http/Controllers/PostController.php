@@ -32,5 +32,30 @@ class PostController extends Controller
         $post = Post::find($id);
         return view('posts.show', ['post' => $post]);
     }
+
+    public function edit($id) 
+    {
+        $post = Post::find($id);
+        return view('posts.edit', ['singlePost' => $post]);
+    }
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+        $post->update([
+            'name' => $request->input('name'),
+            'content' => $request->input('content'),
+     ]);
+
+     return "update successfull";
+    }
+
+    public function destroy($id) 
+    {
+        $post = Post::find($id);
+        $post->delete();
+
+        // return "Post with id: " . $post->id . " deleted";
+         return redirect()->route('posts.index');
+    }
 }
 
